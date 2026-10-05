@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="zh-Hant"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20261005-04-df3a3b1","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YACgEZulLoA,0","Arial Narrow":"YAGyDvJ_4Ts,0","Arial Rounded MT Bold":"YAFcfoaHu-s,0","Arial":"YAGyDvJ_4Ts,0","Avenir Next":"YAFcfmNq6UY,0","Baloo 2":"YADK30bC6HQ,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,1","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAFcfvtOAUY,1","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","Courier Prime":"YAD1aFjegN8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAFdJpU7Kkk,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHQutsX00Q,0","Hanken Grotesk":"YAFcfhwp99E,0","Helvetica Neue":"YAFcf6CtJfI,0","Helvetica":"YAFcf6CtJfI,0","IBM Plex Mono":"YAFdJkmvhGI,0","Impact":"YAFcfnjI7Vk,0","Instrument Serif":"YAHFeOnZNEk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YADK3zbC6RM,0","JetBrains Mono":"YAFdJksXcAk,0","Josefin Sans":"YAFdJjvw9Ps,0","Lato":"YAFdJuFCnaw,0","Libre Baskerville":"YACgEUFdPdA,0","Lobster":"YAD8SnSjSFI,0","Lora":"YACgEXvxf8Q,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YAFdtQi73Xs,0","Nunito":"YAFdJoNRMmU,1","Oleo Script":"YACgEQQ14jI,0","Oswald":"YACgEQY10lw,0","Pacifico":"YADLjORQ1u4,0","Phantom Sans":"YAFdJvgJ5TU,0","Playfair Display":"YAFdJhem5V8,1","Plus Jakarta Sans":"YAGvf3_u0_Q,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YAFdJpYtCxE,1","Raleway":"YAFdJhmxbVQ,1","Roboto Slab":"YAFdJswIKAg,0","Rockwell":"YAFcfyVZnN0,0","Rye":"YACgEdQP21k,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Source Serif 4":"YACgEfdj394,0","Space Grotesk":"YADZ-dYEmhg,0","Space Mono":"YADW1-vpsoc,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","UV Display":"YAEdVfSSpYo,0","UV Sans":"YAFdJvgJ5TU,0","Ubuntu":"YACgERDU--Q,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YAD1aFjegN8,0","ui-sans-serif":"YACkoD1yZN0,0"}}');</script><script src="/_sdk/6542d56fbfe7a3eb.telemetry_sdk.js" integrity="sha512-ECdM0nK7EkwDuOqho2qxgyRQXyBHk9hZqRKMBr+Xsu6zjeHlt+qkO2N2YRiHN7Kg4e1fEHDhjIp4bGJYVypv1g=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HKMC 保單逆按揭累積利息計算器</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #e5eaf1;
+      --blue: #165dba;
+      --blue-dark: #104a95;
+      --blue-soft: #eef6ff;
+      --danger: #b42318;
+      --surface: #ffffff;
+    }
+
+    *,
+    html,
+    body,
+    button,
+    input,
+    select,
+    option,
+    label,
+    table,
+    th,
+    td,
+    .annual-row,
+    .annual-cell,
+    .field-error,
+    .status-message {
+      box-sizing: border-box;
+      font-family: "字由源黑", sans-serif;
+    }
+
+    html,
+    body {
+      width: 100%;
+      margin: 0;
+      color: var(--ink);
+      background: #f6f8fb;
+    }
+
+    button,
+    input,
+    select,
+    option {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      width: 100%;
+    }
+
+    .field-input {
+      width: 100%;
+      height: 42px;
+      border: 1px solid #d4dce8;
+      border-radius: 8px;
+      padding: 8px 11px;
+      color: var(--ink);
+      background: #ffffff;
+      outline: none;
+      font-size: 15px;
+      line-height: 1.3;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .field-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(22, 93, 186, 0.14);
+    }
+
+    .field-error {
+      min-height: 17px;
+      margin: 4px 0 0;
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 17px;
+    }
+
+    .rate-option {
+      display: block;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .rate-option span {
+      display: flex;
+      width: 100%;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0 10px;
+      white-space: nowrap;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .rate-option input:focus-visible + span {
+      outline: 3px solid rgba(22, 93, 186, 0.25);
+      outline-offset: 2px;
+    }
+
+    .rate-option input:checked + span {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      box-shadow: inset 0 0 0 1px var(--blue);
+    }
+
+    .action-button {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 0 14px;
+      white-space: nowrap;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1;
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+    }
+
+    .action-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .action-button:focus-visible {
+      outline: 3px solid rgba(22, 93, 186, 0.28);
+      outline-offset: 2px;
+    }
+
+    .annual-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .annual-grid {
+      min-width: 1110px;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .annual-row {
+      display: grid;
+      grid-template-columns: 92px 104px minmax(145px, 1fr) minmax(145px, 1fr) minmax(165px, 1.12fr) minmax(165px, 1.12fr) minmax(175px, 1.2fr);
+      width: 100%;
+      min-width: 1110px;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.35;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .annual-cell {
+      display: flex;
+      min-width: 0;
+      min-height: 46px;
+      align-items: center;
+      padding: 11px 13px;
+      border-bottom: 1px solid #edf0f4;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.35;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .annual-cell.center {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .annual-cell.amount {
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .annual-header .annual-cell {
+      min-height: 48px;
+      border-bottom: 1px solid #dfe7f1;
+      background: #f7faff;
+      font-weight: 600;
+    }
+
+    .annual-summary .annual-cell {
+      border-top: 1px solid #cfe0f5;
+      border-bottom: 0;
+      background: #f1f7ff;
+      color: #173b6d;
+      font-weight: 700;
+    }
+
+    .annual-body .annual-row:last-child .annual-cell {
+      border-bottom: 0;
+    }
+
+    details summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details[open] .chevron {
+      transform: rotate(180deg);
+    }
+
+    @media (max-width: 640px) {
+      .annual-row,
+      .annual-cell {
+        font-size: 12px;
+      }
+
+      .annual-cell {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/6c2ecc939521f244.data_sdk.js" type="text/javascript" integrity="sha512-gRx8s+XsZDN6mSIQu2sivLZysbV0WHhb5kXNUWlgVb5lCMU1foJYukyMEDPv8Tnoocb8iwqB4XdRrWc7oEGzIQ=="></script>
+  <script src="/_sdk/cfda8dc081c3323c.editing_sdk.js" type="text/javascript" integrity="sha512-dNfMrWh4XAlHjsc8SoR2pkFBBcWdfifAFLC3yNCmnfoD4mTTxOtHMNSuGJMI2GUW0TArNoXmc/EAqYu/Ip9Yiw=="></script>
+  <script src="/_sdk/ab4336f91e694f96.resizing_sdk.js" type="text/javascript" integrity="sha512-cxmeUrBrNlwwLr+tEu/iwM5F3boeK4qDMoH3QjUPqJptkO5NkaDVhQvyIHIn+3EflI5/uubWzkSA78B1tCswgA=="></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full min-h-screen" style="background: rgb(246, 248, 251);">
+  <div class="app-shell">
+   <main class="w-full max-w-[1440px] mx-auto px-4 py-5 sm:px-7 sm:py-7 lg:px-8">
+    <section aria-label="計算輸入資料" class="w-full">
+     <section data-template-id="input-card" class="canva-card rounded-2xl border border-slate-200 px-4 py-4 shadow-sm sm:px-5 sm:py-5" style="background: rgb(255, 255, 255);">
+      <h1 data-template-id="input-title" class="canva-text mb-4 font-bold" style="color: rgb(23, 32, 51); font-weight: 700; font-style: normal; font-size: 19px;">HKMC《保單逆按計劃》累積利息計算器</h1>
+      <form id="calculator-form" novalidate="">
+       <div class="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+         <label data-template-id="age-label" class="canva-text mb-1 block font-semibold" for="age" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">申請人年齡</label> <input id="age" class="field-input" type="number" min="55" max="100" step="1" aria-describedby="age-error">
+         <p id="age-error" class="field-error" aria-live="polite"></p>
+        </div>
+        <div>
+         <label data-template-id="lump-label" class="canva-text mb-1 block font-semibold" for="lump-sum" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">一筆過支付款項</label> <input id="lump-sum" class="field-input" type="number" min="0" step="1000" aria-describedby="lump-error">
+         <p id="lump-error" class="field-error" aria-live="polite"></p>
+        </div>
+        <div>
+         <label data-template-id="monthly-label" class="canva-text mb-1 block font-semibold" for="monthly-annuity" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">每月年金金額</label> <input id="monthly-annuity" class="field-input" type="number" min="0" step="100" aria-describedby="monthly-error">
+         <p id="monthly-error" class="field-error" aria-live="polite"></p>
+        </div>
+        <div>
+         <label data-template-id="term-label" class="canva-text mb-1 block font-semibold" for="term" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">年金年期</label> <select id="term" class="field-input"> <option value="5">5年</option> <option value="10">10年</option> <option value="15">15年</option> <option value="20">20年</option> <option value="life">終身</option> </select>
+         <p class="field-error" aria-hidden="true"></p>
+        </div>
+        <div>
+         <label data-template-id="policy-label" class="canva-text mb-1 block font-semibold" for="policy-value" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">指定壽險保單價值</label> <input id="policy-value" class="field-input" type="number" min="0" step="10000" aria-describedby="policy-error">
+         <p id="policy-error" class="field-error" aria-live="polite"></p>
+        </div>
+        <div>
+         <label data-template-id="prime-label" class="canva-text mb-1 block font-semibold" for="prime-rate" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">最優惠利率 P（%）</label> <input id="prime-rate" class="field-input" type="number" min="0" max="100" step="0.01" aria-describedby="prime-error">
+         <p id="prime-error" class="field-error" aria-live="polite"></p>
+        </div>
+        <fieldset>
+         <legend data-template-id="rate-plan-label" class="canva-text mb-1 block font-semibold" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">利息選項</legend>
+         <div class="grid grid-cols-2 gap-2">
+          <label class="rate-option"> <input class="sr-only" type="radio" name="rate-plan" value="fixed"> <span data-template-id="fixed-option" class="canva-button font-semibold" style="background: rgb(255, 255, 255); color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">固定利率</span> </label> <label class="rate-option"> <input class="sr-only" type="radio" name="rate-plan" value="variable"> <span data-template-id="variable-option" class="canva-button font-semibold" style="background: rgb(255, 255, 255); color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">浮動利率</span> </label>
+         </div>
+         <p class="field-error" aria-hidden="true"></p>
+        </fieldset>
+        <div>
+         <label data-template-id="fixed-rate-label" class="canva-text mb-1 block font-semibold" for="fixed-rate" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">首25年固定利率（%）</label> <input id="fixed-rate" class="field-input" type="number" min="0" max="100" step="0.01" aria-describedby="fixed-error">
+         <p id="fixed-error" class="field-error" aria-live="polite"></p>
+        </div>
+        <div>
+         <label data-template-id="spread-label" class="canva-text mb-1 block font-semibold" for="spread" style="color: rgb(52, 64, 84); font-weight: 500; font-style: normal; font-size: 14px;">利息方案（-%）</label> <input id="spread" class="field-input" type="number" min="0" max="100" step="0.01" aria-describedby="spread-error">
+         <p id="spread-error" class="field-error" aria-live="polite"></p>
+        </div>
+       </div>
+       <div class="mt-2 grid grid-cols-2 gap-2">
+        <button id="calculate-button" data-template-id="calculate-button" class="canva-button action-button border-0 font-bold" type="button" style="background: rgb(22, 93, 186); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 14px;">計算</button> <button id="reset-calculator" data-template-id="reset-button" class="canva-button action-button border border-slate-300 font-bold" type="button" style="background: rgb(255, 255, 255); color: rgb(52, 64, 84); font-weight: 700; font-style: normal; font-size: 14px;">重設</button>
+       </div>
+      </form>
+     </section>
+    </section>
+    <section aria-label="年度明細及利率規則" class="mt-5 w-full space-y-5 sm:mt-6">
+     <section data-template-id="table-card" class="canva-card rounded-2xl border border-slate-200 p-4 shadow-sm sm:p-5" style="background: rgb(255, 255, 255);">
+      <h2 data-template-id="table-title" class="canva-text mb-4 font-bold" style="color: rgb(23, 32, 51); font-weight: 700; font-style: normal; font-size: 19px;">年度明細列表</h2>
+      <div class="annual-table-wrap" aria-label="年度明細表">
+       <div class="annual-grid" role="table" aria-label="年度明細">
+        <div class="annual-row annual-header" role="row">
+         <div data-template-id="head-year" class="canva-text annual-cell center" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">年份</div>
+         <div data-template-id="head-rate" class="canva-text annual-cell center" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">年利率</div>
+         <div data-template-id="head-interest" class="canva-text annual-cell amount" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">年度利息</div>
+         <div data-template-id="head-cumulative-interest" class="canva-text annual-cell amount" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">累計利息</div>
+         <div data-template-id="head-monthly-premium" class="canva-text annual-cell amount" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">每月按揭保費</div>
+         <div data-template-id="head-basic-premium" class="canva-text annual-cell amount" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">基本按揭保費</div>
+         <div data-template-id="head-balance" class="canva-text annual-cell amount" role="columnheader" style="color: rgb(52, 64, 84); font-weight: 600; font-style: normal; font-size: 14px;">年度總結欠</div>
+        </div>
+        <div id="annual-body" class="annual-body" role="rowgroup"></div>
+        <div id="annual-summary" role="rowgroup"></div>
+       </div>
+      </div>
+     </section>
+     <details data-template-id="rules-card" class="canva-panel rounded-2xl border border-slate-200 p-4 shadow-sm sm:p-5" style="background: rgb(255, 255, 255);">
+      <summary class="flex items-center justify-between gap-4"> <span data-template-id="rules-title" class="canva-text font-bold" style="color: rgb(23, 32, 51); font-weight: 700; font-style: normal; font-size: 19px;">利率規則及計算假設</span> <i data-lucide="chevron-down" class="chevron h-5 w-5 text-slate-500 transition-transform" aria-hidden="true"></i> </summary>
+      <div class="mt-3 border-t border-slate-100 pt-3">
+       <p data-template-id="rules-text" class="canva-text leading-7" style="color: rgb(71, 84, 103); font-weight: 400; font-style: normal; font-size: 14px; line-height: 1.7;">本工具只作說明及初步估算。固定利率方案於首25年採用所輸入的固定年利率，其後按最優惠利率扣除利息方案減幅計算；浮動利率方案則全期按最優惠利率扣除利息方案減幅計算。利息包括已累積利息的未償還貸款額以月度複利計算。一筆過支付款項於首月計入，每月年金於各月計入。每月按揭保費按當月結欠的年率1%按月計算；基本按揭保費按指定壽險保單價值的0.2%於首五年逐年計入。實際利率、年金金額、保費、貸款結欠、支付時間、適用條款及最終批核，均以香港按揭證券有限公司、按證保險公司及參與機構的正式文件為準。</p>
+      </div>
+     </details>
+    </section>
+   </main>
+   <footer class="mt-1 w-full border-t border-slate-200 bg-white">
+    <div class="w-full max-w-[1440px] mx-auto px-4 py-4 sm:px-7 lg:px-8">
+     <p data-template-id="footer-note" class="canva-text" style="color: rgb(23, 32, 51); font-weight: 400; font-style: normal; font-size: 14px;">僅供說明及初步估算，不構成財務或保險建議。</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    (() => {
+      "use strict";
+
+      const RESET_VALUES = Object.freeze({
+        age: 55,
+        lump: 0,
+        monthly: 0,
+        term: "life",
+        policy: 3120000,
+        prime: 5.25,
+        plan: "fixed",
+        fixed: 4,
+        spread: 2.5
+      });
+
+      const elements = {
+        form: document.getElementById("calculator-form"),
+        age: document.getElementById("age"),
+        lump: document.getElementById("lump-sum"),
+        monthly: document.getElementById("monthly-annuity"),
+        term: document.getElementById("term"),
+        policy: document.getElementById("policy-value"),
+        prime: document.getElementById("prime-rate"),
+        fixed: document.getElementById("fixed-rate"),
+        spread: document.getElementById("spread"),
+        calculate: document.getElementById("calculate-button"),
+        reset: document.getElementById("reset-calculator"),
+        annualBody: document.getElementById("annual-body"),
+        annualSummary: document.getElementById("annual-summary"),
+        planInputs: Array.from(document.querySelectorAll('input[name="rate-plan"]'))
+      };
+
+      const errorElements = {
+        age: document.getElementById("age-error"),
+        lump: document.getElementById("lump-error"),
+        monthly: document.getElementById("monthly-error"),
+        policy: document.getElementById("policy-error"),
+        prime: document.getElementById("prime-error"),
+        fixed: document.getElementById("fixed-error"),
+        spread: document.getElementById("spread-error")
+      };
+
+      const state = {
+        values: { ...RESET_VALUES },
+        result: null,
+        errors: {}
+      };
+
+      function formatMoney(value) {
+        return "$" + new Intl.NumberFormat("zh-HK", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(Number.isFinite(value) ? value : 0);
+      }
+
+      function formatPercent(value) {
+        return (Number.isFinite(value) ? value : 0).toFixed(2) + "%";
+      }
+
+      function calculate(values) {
+        const maximumYears = Math.max(1, 100 - values.age);
+        const years = values.term === "life"
+          ? maximumYears
+          : Math.min(Math.max(1, Number(values.term)), maximumYears);
+
+        let balance = 0;
+        let cumulativeInterest = 0;
+        let totalInterest = 0;
+        let totalMonthlyPremium = 0;
+        let totalBasicPremium = 0;
+        const rows = [];
+
+        for (let year = 1; year <= years; year += 1) {
+          const rawAnnualRate = values.plan === "fixed" && year <= 25
+            ? values.fixed
+            : values.prime - values.spread;
+
+          const annualRate = Math.max(0, rawAnnualRate);
+          let annualInterest = 0;
+          let annualMonthlyPremium = 0;
+
+          for (let month = 1; month <= 12; month += 1) {
+            if (year === 1 && month === 1) {
+              balance += values.lump;
+            }
+
+            balance += values.monthly;
+
+            const monthlyInterest = balance * (annualRate / 100 / 12);
+            balance += monthlyInterest;
+            annualInterest += monthlyInterest;
+
+            const monthlyPremium = balance * (0.01 / 12);
+            balance += monthlyPremium;
+            annualMonthlyPremium += monthlyPremium;
+          }
+
+          const basicPremium = year <= 5 ? values.policy * 0.002 : 0;
+          balance += basicPremium;
+
+          cumulativeInterest += annualInterest;
+          totalInterest += annualInterest;
+          totalMonthlyPremium += annualMonthlyPremium;
+          totalBasicPremium += basicPremium;
+
+          rows.push({
+            year,
+            rate: annualRate,
+            interest: annualInterest,
+            cumulativeInterest,
+            monthlyPremium: annualMonthlyPremium,
+            basicPremium,
+            balance
+          });
+        }
+
+        return {
+          rows,
+          totalInterest,
+          totalMonthlyPremium,
+          totalBasicPremium,
+          balance
+        };
+      }
+
+      function validateValues(values) {
+        const errors = {};
+
+        if (!Number.isInteger(values.age) || values.age < 55 || values.age > 100) {
+          errors.age = "請輸入55至100歲之間的整數年齡。";
+        }
+
+        if (!Number.isFinite(values.lump) || values.lump < 0) {
+          errors.lump = "請輸入0或以上的金額。";
+        }
+
+        if (!Number.isFinite(values.monthly) || values.monthly < 0) {
+          errors.monthly = "請輸入0或以上的金額。";
+        }
+
+        if (!Number.isFinite(values.policy) || values.policy < 0) {
+          errors.policy = "請輸入0或以上的保單價值。";
+        }
+
+        if (!Number.isFinite(values.prime) || values.prime < 0 || values.prime > 100) {
+          errors.prime = "請輸入0%至100%之間的利率。";
+        }
+
+        if (!Number.isFinite(values.fixed) || values.fixed < 0 || values.fixed > 100) {
+          errors.fixed = "請輸入0%至100%之間的固定利率。";
+        }
+
+        if (!Number.isFinite(values.spread) || values.spread < 0 || values.spread > 100) {
+          errors.spread = "請輸入0%至100%之間的利息方案減幅。";
+        }
+
+        return errors;
+      }
+
+      function readFormValues() {
+        const selectedPlan = elements.planInputs.find((input) => input.checked);
+
+        return {
+          age: elements.age.valueAsNumber,
+          lump: elements.lump.valueAsNumber,
+          monthly: elements.monthly.valueAsNumber,
+          term: elements.term.value,
+          policy: elements.policy.valueAsNumber,
+          prime: elements.prime.valueAsNumber,
+          plan: selectedPlan ? selectedPlan.value : RESET_VALUES.plan,
+          fixed: elements.fixed.valueAsNumber,
+          spread: elements.spread.valueAsNumber
+        };
+      }
+
+      function renderInputs(values) {
+        elements.age.value = String(values.age);
+        elements.lump.value = String(values.lump);
+        elements.monthly.value = String(values.monthly);
+        elements.term.value = values.term;
+        elements.policy.value = String(values.policy);
+        elements.prime.value = String(values.prime);
+        elements.fixed.value = String(values.fixed);
+        elements.spread.value = String(values.spread);
+
+        elements.planInputs.forEach((input) => {
+          input.checked = input.value === values.plan;
+        });
+      }
+
+      function renderErrors(errors) {
+        Object.entries(errorElements).forEach(([key, element]) => {
+          element.textContent = errors[key] || "";
+        });
+      }
+
+      function createCell(content, className) {
+        const cell = document.createElement("div");
+        cell.className = "annual-cell " + className;
+        cell.setAttribute("role", "cell");
+        cell.textContent = content;
+        return cell;
+      }
+
+      function renderAnnualRows(result) {
+        elements.annualBody.replaceChildren();
+
+        const rowFragment = document.createDocumentFragment();
+
+        result.rows.forEach((row) => {
+          const rowElement = document.createElement("div");
+          rowElement.className = "annual-row";
+          rowElement.setAttribute("role", "row");
+
+          rowElement.append(
+            createCell("第" + row.year + "年", "center"),
+            createCell(formatPercent(row.rate), "center"),
+            createCell(formatMoney(row.interest), "amount"),
+            createCell(formatMoney(row.cumulativeInterest), "amount"),
+            createCell(formatMoney(row.monthlyPremium), "amount"),
+            createCell(formatMoney(row.basicPremium), "amount"),
+            createCell(formatMoney(row.balance), "amount")
+          );
+
+          rowFragment.appendChild(rowElement);
+        });
+
+        elements.annualBody.appendChild(rowFragment);
+
+        const summaryRow = document.createElement("div");
+        summaryRow.className = "annual-row annual-summary";
+        summaryRow.setAttribute("role", "row");
+
+        summaryRow.append(
+          createCell("累計", "center"),
+          createCell("", "center"),
+          createCell(formatMoney(result.totalInterest), "amount"),
+          createCell(formatMoney(result.totalInterest), "amount"),
+          createCell(formatMoney(result.totalMonthlyPremium), "amount"),
+          createCell(formatMoney(result.totalBasicPremium), "amount"),
+          createCell(formatMoney(result.balance), "amount")
+        );
+
+        elements.annualSummary.replaceChildren(summaryRow);
+      }
+
+      function render(currentState) {
+        renderInputs(currentState.values);
+        renderErrors(currentState.errors);
+
+        if (currentState.result) {
+          renderAnnualRows(currentState.result);
+        }
+      }
+
+      function commit(values, errors) {
+        state.values = { ...values };
+        state.errors = { ...errors };
+        state.result = Object.keys(errors).length === 0 ? calculate(values) : state.result;
+        render(state);
+      }
+
+      function handleCalculate(event) {
+        event.preventDefault();
+
+        const values = readFormValues();
+        const errors = validateValues(values);
+
+        commit(values, errors);
+      }
+
+      function handleReset(event) {
+        event.preventDefault();
+
+        const resetValues = { ...RESET_VALUES };
+        state.values = resetValues;
+        state.errors = {};
+        state.result = calculate(resetValues);
+        render(state);
+      }
+
+      function initialize() {
+        state.values = { ...RESET_VALUES };
+        state.errors = {};
+        state.result = calculate(state.values);
+
+        elements.form.addEventListener("submit", handleCalculate);
+        elements.calculate.addEventListener("click", handleCalculate);
+        elements.reset.addEventListener("click", handleReset);
+
+        render(state);
+
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }
+
+      initialize();
+    })();
+  </script>
+ 
+</body></html>
